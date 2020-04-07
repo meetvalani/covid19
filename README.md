@@ -8,3 +8,11 @@ Data will be updated at runtime.
         ```
         python main.py
         ```
+
+## Visualization:
+
+### Timewise
+![Image of line graph](https://itsmeet2.000webhostapp.com/datasaver/1.png)
+
+### Statewise
+![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/2.png)
