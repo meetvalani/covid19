@@ -2,10 +2,16 @@ import requests
 import json
 import os
 
-try:
-    os.mkdir("data")
-except:
-    pass
+
+def create_dir(dir_name):
+    try:
+        os.mkdir(dir_name)
+    except:
+        pass
+
+
+create_dir("data")
+create_dir("visualizations")
 
 
 def api_to_json(url):
@@ -25,6 +31,12 @@ def api_to_json(url):
 def gather():
     urls = [
         "https://api.covid19india.org/data.json",
+        "https://api.covid19india.org/v2/state_district_wise.json",
+        # "https://api.covid19india.org/travel_history.json",
+        # "https://api.covid19india.org/raw_data.json",
+        # "https://api.covid19india.org/states_daily.json"
+        #############################################################
+        # "https://api.covid19india.org/state_district_wise.json",
     ]
     for each in urls:
         api_to_json(each)

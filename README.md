@@ -16,3 +16,6 @@ Data will be updated at runtime.
 
 ### Statewise
 ![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/2.png)
+
+### State-Districtwise
+![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/3.png)
