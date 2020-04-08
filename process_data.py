@@ -67,7 +67,10 @@ def data_json_formatter():
     return data
 
 
+def state_district_wise_json_formatter():
+    data = read_from_file("data/state_district_wise.json")
+    return data
+
+
 if __name__ == "__main__":
-    data = data_json_formatter()
-    print(data["cases_time_series"][:3])
-    print(data["statewise"][:3])
+    state_district_wise_json_formatter()

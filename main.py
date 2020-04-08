@@ -1,49 +1,9 @@
 import data_gather
 import process_data
+import math
 from matplotlib import pyplot as plt
 import numpy as np
-
-
-class DailyDataClass:
-    def __init__(self, raw_data):
-        self.days = list()
-        self.dailyconfirmed = list()
-        self.dailydeceased = list()
-        self.dailyrecovered = list()
-        self.totalconfirmed = list()
-        self.totaldeceased = list()
-        self.totalrecovered = list()
-        for each in raw_data["cases_time_series"]:
-            self.days.append(each["date"]["full"])
-            self.dailyconfirmed.append(each["dailyconfirmed"])
-            self.dailydeceased.append(each["dailydeceased"])
-            self.dailyrecovered.append(each["dailyrecovered"])
-            self.totalconfirmed.append(each["totalconfirmed"])
-            self.totaldeceased.append(each["totaldeceased"])
-            self.totalrecovered.append(each["totalrecovered"])
-
-
-class StatewiseDataClass:
-    def __init__(self, raw_data):
-        self.active = list()
-        self.confirmed = list()
-        self.deaths = list()
-        self.deltaconfirmed = list()
-        self.deltadeaths = list()
-        self.deltarecovered = list()
-        self.lastupdatedtime = list()
-        self.state = list()
-        self.statecode = list()
-        for each in raw_data["statewise"]:
-            self.state.append(each["state"])
-            self.active.append(each["active"])
-            self.confirmed.append(each["confirmed"])
-            self.deaths.append(each["deaths"])
-            self.deltaconfirmed.append(each["deltaconfirmed"])
-            self.deltadeaths.append(each["deltadeaths"])
-            self.deltarecovered.append(each["deltarecovered"])
-            self.lastupdatedtime.append(each["lastupdatedtime"])
-            self.statecode.append(each["statecode"])
+from classes import *
 
 
 def plot_multiline_graph(data, last_days=20):
@@ -64,7 +24,16 @@ def plot_multiline_graph(data, last_days=20):
 
     plt.xticks(rotation='vertical')
     plt.legend(loc='best')
+    plt.subplots_adjust(bottom=0.2)
+    plt.savefig('visualizations/daily.png', dpi=600)
     plt.show()
+
+
+def autopct_format(total, values):
+    def my_format(pct):
+        val = int(round(pct*total/100.0))
+        return '{v}'.format(v=val)
+    return my_format
 
 
 def plot_pie_chart(data, no_of_states=10):
@@ -72,22 +41,41 @@ def plot_pie_chart(data, no_of_states=10):
     plt.title(
         "Top 10 COVID-19 affected states in India \n Total: {}".format(data.confirmed[0]))
 
-    def autopct_format(values):
-        def my_format(pct):
-            val = int(round(pct*total/100.0))
-            return '{v}'.format(v=val)
-        return my_format
     plt.pie(data.confirmed[1:no_of_states+1],
-            labels=data.state[1:no_of_states+1], autopct=autopct_format(data.confirmed[1:no_of_states+1]))
+            labels=data.state[1:no_of_states+1], autopct=autopct_format(total, data.confirmed[1:no_of_states+1]))
+    plt.savefig('visualizations/statewise.png', dpi=600)
+    plt.show()
+
+
+def plot_pie_chart_sd(data, no_of_states=3, no_of_district=10, column=3):
+    data = data.main_list
+    max_states = min(no_of_states, len(data), 9)
+    tmp = math.ceil(max_states/column)
+    val = tmp*100 + column*10
+    fig = plt.figure(figsize=(4*max_states, 3))
+
+    for i in range(max_states):
+        ax = fig.add_subplot(val+i+1)
+        ax.set_title(data[i]["state"])
+        mx = min(no_of_district, len(data[i]["district"]))
+        ax.pie(data[i]["confirmed"][:mx], labels=data[i]["district"][:mx],
+               autopct=autopct_format(data[i]["total"], data[i]["confirmed"][:mx]))
+
+    plt.suptitle('Top-'+str(no_of_states)+' State-District wise Information')
+    plt.savefig('visualizations/state_district.png', dpi=600)
     plt.show()
 
 
 if __name__ == "__main__":
     data_gather.gather()
-    raw_data = process_data.data_json_formatter()
+    raw_data1 = process_data.data_json_formatter()
 
-    data = DailyDataClass(raw_data)
-    data2 = StatewiseDataClass(raw_data)
+    data1 = DailyDataClass(raw_data1)
+    plot_multiline_graph(data1, last_days=20)
 
-    plot_multiline_graph(data, last_days=20)
+    data2 = StatewiseDataClass(raw_data1)
     plot_pie_chart(data2, no_of_states=10)
+
+    raw_data2 = process_data.state_district_wise_json_formatter()
+    data3 = StateDistrictwiseDataClass(raw_data2)
+    plot_pie_chart_sd(data3, no_of_states=4, no_of_district=4, column=2)
