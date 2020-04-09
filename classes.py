@@ -64,3 +64,28 @@ class StateDistrictwiseDataClass:
             })
         self.main_list.sort(key=lambda x: x["total"])
         self.main_list.reverse()
+
+
+class StatesDailyDataClass:
+    def __init__(self, raw_data):
+        self.dates = list()
+        self.states_data = dict()
+        self.state_code = raw_data["state_code"]
+        for state_name in raw_data["state_code"].keys():
+            self.states_data.update({state_name: {
+                "total": 0,
+                "data": {
+                    "Confirmed": list(),
+                    "Recovered": list(),
+                    "Deceased": list()
+                }
+            }})
+        for daily in raw_data["states_daily"]:
+            flag = daily["status"]
+            date = daily["date"]
+            if date not in self.dates:
+                self.dates.append(date)
+            for state in daily.keys():
+                if state != "status" and state != "date":
+                    self.states_data[state]["total"] += daily[state]
+                    self.states_data[state]["data"][flag].append(daily[state])

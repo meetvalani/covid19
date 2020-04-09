@@ -11,23 +11,26 @@ def read_from_file(filename):
     return data
 
 
-def cases_time_series_formatter(data):
-    months = {
-        'january': 1,
-        'february': 2,
-        'march': 3,
-        'april': 4,
-        'may': 5,
-        'june': 6,
-        'july': 7,
-        'august': 8,
-        'september': 9,
-        'october': 10,
-        'november': 11,
-        'december': 12}
+months = {
+    'jan': 1,
+    'feb': 2,
+    'mar': 3,
+    'apr': 4,
+    'may': 5,
+    'jun': 6,
+    'jul': 7,
+    'aug': 8,
+    'sep': 9,
+    'oct': 10,
+    'nov': 11,
+    'dec': 12}
 
-    def month_no(month_name):
-        return months[month_name.lower()]
+
+def month_no(month_name):
+    return months[month_name.lower()[:3]]
+
+
+def cases_time_series_formatter(data):
 
     for each in data["cases_time_series"]:
         each["dailyconfirmed"] = int(each["dailyconfirmed"])
@@ -72,5 +75,25 @@ def state_district_wise_json_formatter():
     return data
 
 
+def state_from_statecode():
+    data = read_from_file("data/state_code.json")
+    return data
+
+
+def state_daily_json_formatter():
+    data = read_from_file("data/states_daily.json")
+    data2 = read_from_file("data/state_code.json")
+    for daily in data["states_daily"]:
+        for state in daily.keys():
+            try:
+                daily[state] = int(daily[state])
+            except:
+                if daily[state] == "":
+                    daily[state] = 0
+    data.update({"state_code": data2})
+    return data
+
+
 if __name__ == "__main__":
-    state_district_wise_json_formatter()
+    data = state_daily_json_formatter()
+    print(data, type(data))
