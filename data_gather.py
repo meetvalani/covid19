@@ -32,11 +32,7 @@ def gather():
     urls = [
         "https://api.covid19india.org/data.json",
         "https://api.covid19india.org/v2/state_district_wise.json",
-        # "https://api.covid19india.org/travel_history.json",
-        # "https://api.covid19india.org/raw_data.json",
-        # "https://api.covid19india.org/states_daily.json"
-        #############################################################
-        # "https://api.covid19india.org/state_district_wise.json",
+        "https://api.covid19india.org/states_daily.json",
     ]
     for each in urls:
         api_to_json(each)
