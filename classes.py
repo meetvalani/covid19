@@ -38,6 +38,8 @@ class StatewiseDataClass:
             self.deltarecovered.append(each["deltarecovered"])
             self.lastupdatedtime.append(each["lastupdatedtime"])
             self.statecode.append(each["statecode"])
+        self.confirmed, self.active, self.deaths, self.deltaconfirmed, self.deltadeaths, self.deltarecovered, self.lastupdatedtime, self.state, self.statecode = zip(
+            *sorted(zip(self.confirmed, self.active, self.deaths, self.deltaconfirmed, self.deltadeaths, self.deltarecovered, self.lastupdatedtime, self.state, self.statecode), reverse=True))
 
 
 class StateDistrictwiseDataClass:
