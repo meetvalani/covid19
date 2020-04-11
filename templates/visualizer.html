@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body bgcolor="orange">
+    <div align="center">
+        <br><img src="{{ url_for('static', filename='visualizations/daily.png') }}" style="height: 50%; width: 70%;">
+        <br><br><br><img src="{{ url_for('static', filename='visualizations/statewise.png') }}"
+            style="height: 50%; width: 70%;">
+        <br><br><br><img src="{{ url_for('static', filename='visualizations/state_district.png') }}"
+            style="height: 50%; width: 70%;">
+        <br><br><br><img src="{{ url_for('static', filename='visualizations/state_daily.png') }}"
+            style="height: 50%; width: 70%;">
+    </div>
+</body>
+
+</html>
+
+<!--
+$.post("http://192.168.1.22:8123/get_profile",    //<-- target url
+                {   //it's data
+                    'person': person
+                },
+                function (data, status) {   //response handler function
+                    if (status == "success") {
+                        if (data == "invalid user") {
+                            window.location = "/room"
+                        }
+                        document.getElementById("username").innerHTML = "Username: " + data['username'];
+                        document.getElementById("location").innerHTML = "Location: " + data['location'];
+                        document.getElementById("company").innerHTML = "Company: " + data['company'];
+                        document.getElementById("job_title").innerHTML = "Job title: " + data['job_title'];
+                        document.getElementById("job_description").innerHTML = "Job description: " + data['job_description'];
+                    }
+                });
+
+-->
