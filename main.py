@@ -7,20 +7,27 @@ from classes import *
 
 
 def plot_multiline_graph(data, last_days=20):
-    plt.title("COVID-19 Information in India")
     dot_size = 4
 
-    plt.plot(data.days[-last_days:], data.dailyconfirmed[-last_days:], label="Daily Confirmed",
-             color="orange", marker='o', markerfacecolor='orange', markersize=dot_size)
+    fig = plt.figure()
+    fig.suptitle("COVID-19 Information in India")
+    plt.subplot(121, title="Total")
+    plt.plot(data.days[-last_days:], data.totalconfirmed[-last_days:], color="blue",
+             label="Total", marker='o', markerfacecolor='blue', markersize=dot_size)
 
+    plt.xticks(rotation='vertical')
+    plt.legend(loc='best')
+    plt.subplots_adjust(bottom=0.2)
+
+    plt.subplot(122, title="Categorywise")
     plt.plot(data.days[-last_days:], data.dailyrecovered[-last_days:], color="green",
              label="Recovered", marker='o', markerfacecolor='green', markersize=dot_size)
 
     plt.plot(data.days[-last_days:], data.dailydeceased[-last_days:], color="red",
              label="Deceased", marker='o', markerfacecolor='red', markersize=dot_size)
 
-    plt.plot(data.days[-last_days:], data.totalconfirmed[-last_days:], color="blue",
-             label="Total", marker='o', markerfacecolor='blue', markersize=dot_size)
+    plt.plot(data.days[-last_days:], data.dailyconfirmed[-last_days:], label="Daily Confirmed",
+             color="orange", marker='o', markerfacecolor='orange', markersize=dot_size)
 
     plt.xticks(rotation='vertical')
     plt.legend(loc='best')
@@ -111,4 +118,5 @@ if __name__ == "__main__":
 
     raw_data3 = process_data.state_daily_json_formatter()
     data4 = StatesDailyDataClass(raw_data3)
-    plot_multiline_graph_state_daily(data4)
+    plot_multiline_graph_state_daily(
+        data4, last_days=10, no_of_states=5, show_total=False)
