@@ -28,6 +28,7 @@ class StatewiseDataClass:
         self.lastupdatedtime = list()
         self.state = list()
         self.statecode = list()
+
         for each in raw_data["statewise"]:
             self.state.append(each["state"])
             self.active.append(each["active"])
@@ -91,3 +92,11 @@ class StatesDailyDataClass:
                 if state != "status" and state != "date":
                     self.states_data[state]["total"] += daily[state]
                     self.states_data[state]["data"][flag].append(daily[state])
+        tmp = []
+        for each in self.states_data.keys():
+            tmp.append([self.states_data[each]['total'], each])
+        tmp.sort(reverse=True)
+        buffer = dict()
+        for each in tmp:
+            buffer.update({each[1]: self.states_data[each[1]]})
+        self.states_data = buffer
