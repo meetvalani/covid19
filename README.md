@@ -12,13 +12,13 @@ Data will be updated at runtime.
 ## Visualization:
 
 ### Timewise
-![Image of line graph](https://itsmeet2.000webhostapp.com/datasaver/1.png)
+![Image of line graph](./visualizations/daily.png)
 
 ### Statewise Current
-![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/2.png)
+![Image of pie chart](./visualizations/state_daily.png)
 
 ### State-Districtwise
-![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/3.png)
+![Image of pie chart](./visualizations/state_district.png)
 
 ### Statewise Daily
-![Image of pie chart](https://itsmeet2.000webhostapp.com/datasaver/4.png)
+![Image of pie chart](./visualizations/statewise.png)
