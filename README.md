@@ -15,10 +15,10 @@ Data will be updated at runtime.
 ![Image of line graph](./visualizations/daily.png)
 
 ### Statewise Current
-![Image of pie chart](./visualizations/state_daily.png)
+![Image of pie chart](./visualizations/statewise.png)
 
 ### State-Districtwise
 ![Image of pie chart](./visualizations/state_district.png)
 
 ### Statewise Daily
-![Image of pie chart](./visualizations/statewise.png)
+![Image of pie chart](./visualizations/state_daily.png)
